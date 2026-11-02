@@ -33,7 +33,7 @@
             android:id="@+id/benar_saat_ini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Benar: 9"
+            android:text="@string/benar_saat_ini"
             android:layout_marginLeft="10dp"
             android:textSize="18dp"
             android:fontFamily="@font/arca_majora_3_bold"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/arca_majora_3_bold"
-            android:text="Rekor: 9"
+            android:text="@string/rekor_text"
             android:layout_marginRight="10dp"
             android:textSize="18dp" />
 
@@ -76,26 +76,46 @@
                 android:fontFamily="@font/arca_majora_3_bold"
                 android:text="Whatever"
                 android:textSize="18dp"
-                app:cornerRadius="8dp" />
-
-<!--            <Space-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:layout_weight="1"-->
-<!--                />-->
-
-<!--            <Button-->
-<!--                android:layout_width="140dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:backgroundTint="@color/main_color"-->
-<!--                android:fontFamily="@font/arca_majora_3_bold"-->
-<!--                android:text="Apapun"-->
-<!--                android:textSize="18dp"-->
-<!--                app:cornerRadius="8dp" />-->
+                app:cornerRadius="8dp"
+                android:paddingBottom="14dp"
+                />
         </LinearLayout>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
 
+        <TextView
+            android:id="@+id/nyawa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GAGAL"
+            android:fontFamily="@font/arca_majora_3_bold"
+            android:layout_gravity="center"
+            android:textSize="25dp"
+            android:textAlignment="center"
+            android:textColor="@color/main_color"
+            />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jika nyawa habis game over"
+            android:textSize="8dp"
+            android:layout_gravity="center"
+
+            />
+        <!-- Priview button -->
+        <Button
+            android:id="@+id/kurangi_nyawa"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="kurangi nyawa"
+            android:layout_gravity="center"
+            />
 
     </LinearLayout>
 

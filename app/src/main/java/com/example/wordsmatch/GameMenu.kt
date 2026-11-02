@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.example.wordsmatch.databinding.ActivityGameMenuBinding
 
 class GameMenu : AppCompatActivity() {
@@ -33,14 +34,25 @@ class GameMenu : AppCompatActivity() {
             insets
         }
 
+        // Function
+        fun UpdateNyawa(nyawa: Int){
+            binding.nyawa.text = "❤".repeat(nyawa)
+        }
+
         val bestScore = 64
         val currentBenar = 4
+        var nyawa = 3
+        UpdateNyawa(nyawa)
+        binding.kurangiNyawa.setOnClickListener {
+            nyawa = nyawa - 1
+            UpdateNyawa(nyawa)
+        }
         binding.benarSaatIni.text = getString(R.string.benar_saat_ini, currentBenar)
         binding.rekorSaatIni.text = getString(R.string.rekor_text, bestScore)
 
         // Game core
         val div2btn = findViewById<LinearLayout>(R.id.div2btn)
-        val daftarKata = listOf("Whatever","Apapun","Table","Meja","Wise","Bijak").shuffled()
+        val daftarKata = listOf("Whatever","Apapun","Table","Meja","Wise","Bijak", "Most", "Banyak", "Could", "Bisa").shuffled()
         div2btn.removeAllViews()
 
         for(i in daftarKata.indices step 2) {
@@ -65,6 +77,7 @@ class GameMenu : AppCompatActivity() {
                 textSize = 18f
                 backgroundTintList = getColorStateList(R.color.main_color)
                 typeface = arcaFont
+                updatePadding(0,0,0,14)
                 setTextColor(getColor(android.R.color.white))
 
                 layoutParams = LinearLayout.LayoutParams(
@@ -86,6 +99,7 @@ class GameMenu : AppCompatActivity() {
                 text = kataKedua
                 textSize = 18f
                 backgroundTintList = getColorStateList(R.color.main_color)
+                updatePadding(0,0,0,14)
                 setTextColor(getColor(android.R.color.white))
                 typeface = arcaFont
 
