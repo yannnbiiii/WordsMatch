@@ -42,6 +42,7 @@
         >
 
         <TextView
+            android:id="@+id/tvBestScore"
             android:layout_width="308dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
