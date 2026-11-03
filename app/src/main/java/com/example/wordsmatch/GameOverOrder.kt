@@ -2,10 +2,7 @@ package com.example.wordsmatch
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.wordsmatch.databinding.ActivityGameOverOrderBinding
 
 class GameOverOrder : AppCompatActivity() {
@@ -16,22 +13,21 @@ class GameOverOrder : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGameOverOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        val skor = intent.getIntExtra("skor", 0)
+        val rekor = intent.getIntExtra("rekor", 0)
+
+        binding.benarText.text = "Benar: $skor"
+        binding.rekorText.text = "Rekor: $rekor"
 
         binding.mainLagi.setOnClickListener {
-            val intent = Intent(this, GameMenu::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, GameMenu::class.java))
+            finish()
         }
 
         binding.menuUtama.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
-
     }
 }

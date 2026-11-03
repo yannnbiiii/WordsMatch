@@ -23,14 +23,13 @@
             android:text="GAME OVER!!!"
             android:layout_gravity="center"
             android:fontFamily="@font/american_captain"
-
-
             />
 
         <TextView
+            android:id="@+id/benarText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/benar_saat_ini"
+            android:text="Benar: 0"
             android:layout_marginTop="14dp"
             android:fontFamily="@font/arca_majora_3_bold"
             android:textSize="20dp"
@@ -38,9 +37,10 @@
             />
 
         <TextView
+            android:id="@+id/rekorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/rekor_text"
+            android:text="Rekor: 0"
             android:fontFamily="@font/arca_majora_3_bold"
             android:textSize="20dp"
             android:layout_gravity="center"
@@ -58,7 +58,6 @@
             android:layout_gravity="center"
             android:fontFamily="@font/arca_majora_3_bold"
             android:paddingBottom="14dp"
-
             />
 
         <Button
@@ -73,7 +72,6 @@
             android:layout_gravity="center"
             android:fontFamily="@font/arca_majora_3_bold"
             android:paddingBottom="14dp"
-
             />
     </LinearLayout>
 

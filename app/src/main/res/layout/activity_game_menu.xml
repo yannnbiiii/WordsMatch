@@ -108,18 +108,6 @@
             android:layout_gravity="center"
 
             />
-        <!-- Priview button -->
-        <Button
-            android:id="@+id/kurangi_nyawa"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="kurangi nyawa"
-            android:layout_gravity="center"
-            />
 
     </LinearLayout>
-
-
-
-
 </LinearLayout>
