@@ -23,8 +23,8 @@
         </activity>
         <activity
             android:name=".GameMenu"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".GameOverOrder"
             android:exported="false"

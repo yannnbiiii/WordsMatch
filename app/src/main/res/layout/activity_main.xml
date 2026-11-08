@@ -27,8 +27,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="10dp"
             android:text="COCOKAN KATA INGGRIS DENGAN ARTINYA"
-            android:fontFamily="@font/american_captain"
+            android:fontFamily="@font/arca_majora_3_bold"
             android:layout_gravity="center"
 
             />
@@ -48,7 +49,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/american_captain"
-            android:text="@string/best_score"
+            android:text="Best score: 0"
             android:textAlignment="center"
             android:textSize="40dp" />
 

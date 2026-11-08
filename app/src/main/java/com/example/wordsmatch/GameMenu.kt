@@ -2,6 +2,7 @@ package com.example.wordsmatch
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -87,6 +88,7 @@ class GameMenu : AppCompatActivity() {
             .getInt("rekor", 0)
         binding.rekorSaatIni.text = "Rekor: $rekor"
 
+
         mulaiPermainan()
     }
 
@@ -145,6 +147,7 @@ class GameMenu : AppCompatActivity() {
                 R.font.arca_majora_3_bold
             )
 
+        // Lebar tombol
         val lebarPx =
             (140 * resources.displayMetrics.density).toInt()
 
@@ -161,22 +164,23 @@ class GameMenu : AppCompatActivity() {
                 }
             }
 
-            fun buatSatuTombol(kata: String): Button {
+            fun buatSatuTombol(kata: String): Button { //: Button artinya harus mengembalikan nilai button
 
                 return Button(this).apply {
 
                     text = kata
                     textSize = 18f
 
+                    typeface = arcaFont // font familly
+
                     backgroundTintList =
                         getColorStateList(R.color.main_color)
 
-                    typeface = arcaFont
                     updatePadding(0, 0, 0, 14)
                     setTextColor(Color.WHITE)
 
                     layoutParams = LinearLayout.LayoutParams(
-                        lebarPx,
+                        lebarPx, // lebarPx adalah var dengan nilai 140dp sebelumnya
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
 
@@ -212,7 +216,6 @@ class GameMenu : AppCompatActivity() {
     private fun pilihKata(tombol: Button) {
 
         if (pilihanPertama == null) {
-
             pilihanPertama = tombol
             tombol.alpha = 0.5f
 
@@ -284,6 +287,17 @@ class GameMenu : AppCompatActivity() {
             nyawa--
             updateNyawa()
 
+            // isi ulang lagi
+            if (pasanganTersedia.isEmpty()) {
+
+                pasanganTersedia.addAll(
+                    semuaPasangan.filter { kandidat ->
+                        kandidat !in pasanganAktif &&
+                                kandidat != pasanganBenar
+                    }.shuffled()
+                )
+            }
+
             Toast.makeText(
                 this,
                 "Salah! Nyawa berkurang",
@@ -307,12 +321,19 @@ class GameMenu : AppCompatActivity() {
                     GameOverOrder::class.java
                 )
 
+                val intent2 = Intent(
+                    this,
+                    MainActivity::class.java
+                )
+
                 intent.putExtra("skor", skor)
                 intent.putExtra("rekor", rekorBaru)
-
+                intent2.putExtra("rekor", rekorBaru)
                 startActivity(intent)
                 finish()
             }
+
+
         }
     }
 }

@@ -26,8 +26,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val bestScore = 64
-        binding.tvBestScore.text = getString(R.string.best_score, bestScore)
+        var rekors = getSharedPreferences("wordsmatch", MODE_PRIVATE)
+            .getInt("rekor", 0)
+
+        var bestScore = rekors
+        bestScore = intent.getIntExtra("rekor", rekors)
+//        binding.tvBestScore.text = getString(R.string.best_score, bestScore)
+        binding.tvBestScore.text = "Best score: $bestScore"
 
         binding.buttonStart.setOnClickListener {
             val intent = Intent(this, GameMenu::class.java)
