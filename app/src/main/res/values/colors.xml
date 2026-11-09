@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="main_color">#424245</color>
     <color name="main_color_stroke">#42424580</color>
+    <color name="hijau_benar">#F889F850</color>
+    <color name="merah_salah">#F24C40</color>
 </resources>

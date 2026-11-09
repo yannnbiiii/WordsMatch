@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
 
         var bestScore = rekors
         bestScore = intent.getIntExtra("rekor", rekors)
-//        binding.tvBestScore.text = getString(R.string.best_score, bestScore)
         binding.tvBestScore.text = "Best score: $bestScore"
 
         binding.buttonStart.setOnClickListener {

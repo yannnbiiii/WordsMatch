@@ -13,6 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.example.wordsmatch.databinding.ActivityGameMenuBinding
+import kotlinx.coroutines.delay
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class GameMenu : AppCompatActivity() {
 
@@ -229,13 +233,14 @@ class GameMenu : AppCompatActivity() {
         val kataPertama = pilihanPertama?.text.toString()
         val kataKedua = tombol.text.toString()
 
-        periksaJawaban(kataPertama, kataKedua)
+        periksaJawaban(kataPertama, kataKedua, tombol)
     }
 
     // Memeriksa pasangan kata
     private fun periksaJawaban(
         kata1: String,
-        kata2: String
+        kata2: String,
+        button2: Button
     ) {
 
         // Urutan pilihan bebas: Indonesia dulu atau Inggris dulu
@@ -277,9 +282,14 @@ class GameMenu : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
 
-            pilihanPertama = null
-
-            tampilkanKata()
+            pilihanPertama?.alpha = 1f
+            pilihanPertama?.backgroundTintList = getColorStateList(R.color.hijau_benar)
+            button2.backgroundTintList = getColorStateList(R.color.hijau_benar)
+            lifecycleScope.launch {
+                pilihanPertama = null
+                delay(1000)
+                tampilkanKata()
+            }
 
         } else {
 
@@ -303,9 +313,14 @@ class GameMenu : AppCompatActivity() {
                 "Salah! Nyawa berkurang",
                 Toast.LENGTH_SHORT
             ).show()
-
             pilihanPertama?.alpha = 1f
-            pilihanPertama = null
+            pilihanPertama?.backgroundTintList = getColorStateList(R.color.merah_salah)
+            button2.backgroundTintList = getColorStateList(R.color.merah_salah)
+            lifecycleScope.launch {
+                pilihanPertama = null
+                delay(2000)
+                tampilkanKata()
+            }
 
             // Game Over
             if (nyawa <= 0) {
