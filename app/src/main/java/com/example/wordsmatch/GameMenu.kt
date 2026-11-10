@@ -331,6 +331,11 @@ class GameMenu : AppCompatActivity() {
                 val rekorBaru = maxOf(rekorLama, skor)
                 prefs.edit().putInt("rekor", rekorBaru).apply()
 
+                // Kirim ke server kalau sedang login
+                Session.username(this)?.let { user ->
+                    ApiClient.kirimSkor(user, rekorBaru)
+                }
+
                 val intent = Intent(
                     this,
                     GameOverOrder::class.java
@@ -347,7 +352,6 @@ class GameMenu : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
 
         }
     }
