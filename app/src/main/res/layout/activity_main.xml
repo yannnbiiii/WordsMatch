@@ -100,4 +100,26 @@
             app:iconTint="@color/white" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/sapaUser"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/arca_majora_3_bold"
+        android:text="Selamat bermain Fidel! "
+        android:textAlignment="center"
+        android:textColor="@color/main_color"
+        android:textSize="20dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/arca_majora_3_bold"
+        android:text="Jadilah pemain papan Atas!"
+        android:textAlignment="center"
+        android:textColor="@color/main_color"
+        android:textSize="10dp"
+        android:layout_gravity="center"
+        />
 </LinearLayout>

@@ -69,6 +69,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        var namaUser = Session.username(this)
+        binding.sapaUser.text = "Selamat bermain $namaUser !"
+
         binding.buttonStart.setOnClickListener {
             startActivity(Intent(this, GameMenu::class.java))
         }
