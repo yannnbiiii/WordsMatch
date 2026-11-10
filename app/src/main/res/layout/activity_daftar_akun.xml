@@ -44,17 +44,19 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutUsername"
         android:layout_width="280dp"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
-        app:hintTextColor="@color/white"
         app:boxStrokeColor="@color/input_stroke_color"
-        android:hint="*Masukkan Username">
+        app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="*Masukkan Username"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:inputType="textPersonName" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -62,19 +64,21 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layoutPassword"
         android:layout_width="280dp"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="16dp"
-        app:hintTextColor="@color/white"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white"
         app:boxStrokeColor="@color/input_stroke_color"
-        android:hint="*Masukkan Password">
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="*Masukkan Password"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
