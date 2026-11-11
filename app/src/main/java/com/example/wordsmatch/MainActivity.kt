@@ -70,6 +70,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         var namaUser = Session.username(this)
+        if (namaUser == null) {
+            namaUser = ""
+        }
         binding.sapaUser.text = "Selamat bermain $namaUser !"
 
         binding.buttonStart.setOnClickListener {

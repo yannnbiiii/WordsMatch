@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#C3C1C1</color>
     <color name="main_color">#424245</color>
     <color name="main_color_stroke">#42424580</color>
     <color name="hijau_benar">#F889F850</color>
