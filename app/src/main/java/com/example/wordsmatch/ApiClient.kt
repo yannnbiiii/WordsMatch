@@ -12,9 +12,9 @@ import java.net.URLEncoder
 object ApiClient {
 
     // Emulator: 10.0.2.2 = "localhost" laptop kamu
-    // HP asli: ganti dengan IP laptop (cek lewat `ipconfig`), contoh "http://192.168.1.5/wordsmatch/"
+    // HP asli: ganti dengan IP laptop kamu (cek lewat `ipconfig`), contoh "http://192.168.1.5/wordsmatch/"
     // const val BASE_URL = "http://localhost/wordsmatch/"
-    const val BASE_URL = "http://10.184.163.183/wordsmatch/"
+    const val BASE_URL = "http://192.168.18.7/wordsmatch/"
 
 
     suspend fun post(endpoint: String, params: Map<String, String> = emptyMap()): JSONObject =

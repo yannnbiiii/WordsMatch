@@ -249,7 +249,7 @@ class GameMenu : AppCompatActivity() {
                     (it.inggris == kata1 && it.indonesia == kata2)
         }
 
-        if (pasanganBenar != null) {
+        if (pasanganBenar != null) { // jika pasangan benar
 
             // Jawaban benar
             skor++

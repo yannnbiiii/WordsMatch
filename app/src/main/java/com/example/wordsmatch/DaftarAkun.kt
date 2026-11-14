@@ -59,9 +59,13 @@ class DaftarAkun : AppCompatActivity() {
     private fun daftar() {
         val username = binding.inputUsername.text.toString().trim()
         val password = binding.inputPassword.text.toString()
+        val pertanyaan = binding.inputPertanyaan.text.toString().trim()
+        val jawaban = binding.inputJawaban.text.toString().trim()
 
         binding.layoutUsername.error = null
         binding.layoutPassword.error = null
+        binding.layoutPertanyaan.error = null
+        binding.layoutJawaban.error = null
 
         if (username.isEmpty()) {
             binding.layoutUsername.error = "Username wajib diisi"
@@ -71,13 +75,26 @@ class DaftarAkun : AppCompatActivity() {
             binding.layoutPassword.error = "Password minimal 6 karakter"
             return
         }
+        if (pertanyaan.isEmpty()) {
+            binding.layoutPertanyaan.error = "Pertanyaan keamanan wajib diisi"
+            return
+        }
+        if (jawaban.isEmpty()) {
+            binding.layoutJawaban.error = "Jawaban keamanan wajib diisi"
+            return
+        }
 
         binding.btnDaftar.isEnabled = false // cegah klik berkali-kali
 
         lifecycleScope.launch {
             val res = ApiClient.post(
                 "register.php",
-                mapOf("username" to username, "password" to password)
+                mapOf(
+                    "username" to username,
+                    "password" to password,
+                    "pertanyaan" to pertanyaan,
+                    "jawaban" to jawaban
+                )
             )
             binding.btnDaftar.isEnabled = true
             Toast.makeText(this@DaftarAkun, res.optString("message"), Toast.LENGTH_SHORT).show()

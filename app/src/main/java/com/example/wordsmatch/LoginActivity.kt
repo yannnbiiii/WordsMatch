@@ -54,6 +54,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, DaftarAkun::class.java))
             finish()
         }
+
+        binding.tvLupaPassword.setOnClickListener {
+            startActivity(Intent(this, LupaPasswordActivity::class.java))
+        }
     }
 
     private fun login() {
