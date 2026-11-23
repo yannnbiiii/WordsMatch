@@ -4,11 +4,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
@@ -21,38 +25,50 @@ import kotlinx.coroutines.launch
 class GameMenu : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameMenuBinding
+    private var kesempatanya: Int = 3
+    private var sedangCek = false
+
 
     data class PasanganKata(
         val inggris: String,
         val indonesia: String
     )
-
+    private lateinit var varnotifBenar: Animation
     // Bank kosakata
-    private val semuaPasangan = listOf(
-        PasanganKata("Whatever", "Apapun"),
+
+    private val pasanganEasy = listOf(
         PasanganKata("Table", "Meja"),
-        PasanganKata("Wise", "Bijak"),
-        PasanganKata("Many", "Banyak"),
-        PasanganKata("Could", "Bisa"),
         PasanganKata("Apple", "Apel"),
         PasanganKata("Book", "Buku"),
         PasanganKata("Chair", "Kursi"),
         PasanganKata("Water", "Air"),
         PasanganKata("School", "Sekolah"),
         PasanganKata("Friend", "Teman"),
-        PasanganKata("Beautiful", "Cantik"),
-        PasanganKata("Brave", "Berani"),
-        PasanganKata("Flower", "Bunga"),
         PasanganKata("Window", "Jendela"),
         PasanganKata("Happy", "Bahagia"),
-        PasanganKata("Strong", "Kuat"),
-        PasanganKata("Garden", "Taman"),
-        PasanganKata("Learn", "Belajar"),
-        PasanganKata("Journey", "Perjalanan")
+        PasanganKata("Learn", "Belajar")
     )
+
+    private val pasanganHard = listOf(
+        PasanganKata("Whatever", "Apapun"),
+        PasanganKata("Stubborn", "Keras Kepala"),
+        PasanganKata("Humble", "Rendah Hati"),
+        PasanganKata("Clumsy", "Ceroboh"),
+        PasanganKata("Fragile", "Rapuh"),
+        PasanganKata("Vague", "Samar"),
+        PasanganKata("Decent", "Layak"),
+        PasanganKata("Grateful", "Bersyukur"),
+        PasanganKata("Hesitate", "Ragu"),
+        PasanganKata("Dread", "Takut")
+    )
+    private val pasanganCampuran = pasanganEasy + pasanganHard
+
+
+    private var semuaPasangan = listOf<PasanganKata>()
 
     // Lima pasangan aktif
     private val pasanganAktif = mutableListOf<PasanganKata>()
+    private val katasudahtertebak = mutableListOf<PasanganKata>()
 
     // Persediaan pasangan baru
     private val pasanganTersedia = mutableListOf<PasanganKata>()
@@ -64,6 +80,15 @@ class GameMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val modePermainan = intent.getStringExtra("MODE") ?: "EASY"
+
+        semuaPasangan = when (modePermainan) {
+            "HARD" -> pasanganHard
+            "CAMPURAN" -> pasanganCampuran
+            else -> pasanganEasy
+        }
+
+        varnotifBenar = AnimationUtils.loadAnimation(this, R.anim.notifbenar)
         enableEdgeToEdge()
 
         binding = ActivityGameMenuBinding.inflate(layoutInflater)
@@ -92,8 +117,31 @@ class GameMenu : AppCompatActivity() {
             .getInt("rekor", 0)
         binding.rekorSaatIni.text = "Rekor: $rekor"
 
-
         mulaiPermainan()
+        binding.refreshBtn.text = "Refresh $kesempatanya x"
+
+        binding.refreshBtn.setOnClickListener {
+            kesempatanya--
+            if (kesempatanya != 0) {
+                binding.refreshBtn.isEnabled
+            } else {
+                binding.refreshBtn.isEnabled = false
+                binding.refreshBtn.setTextColor(getColor(R.color.white))
+            }
+            binding.refreshBtn.text = "Refresh $kesempatanya x"
+            pilihanPertama?.alpha = 1f
+            pilihanPertama = null
+
+            pasanganTersedia.clear()
+            pasanganTersedia.addAll(semuaPasangan.shuffled())
+            pasanganAktif.clear()
+            repeat(5) {
+                if (pasanganTersedia.isNotEmpty()) {
+                    pasanganAktif.add(pasanganTersedia.removeAt(0))
+                }
+            }
+            tampilkanKata()
+        }
     }
 
     private fun updateSkor() {
@@ -110,7 +158,7 @@ class GameMenu : AppCompatActivity() {
 
         pasanganAktif.clear()
         pasanganTersedia.clear()
-
+        katasudahtertebak.clear()
         pasanganTersedia.addAll(semuaPasangan.shuffled())
 
         repeat(5) {
@@ -218,6 +266,8 @@ class GameMenu : AppCompatActivity() {
 
     // Memilih kata
     private fun pilihKata(tombol: Button) {
+        if (sedangCek) return
+
 
         if (pilihanPertama == null) {
             pilihanPertama = tombol
@@ -227,6 +277,8 @@ class GameMenu : AppCompatActivity() {
         }
 
         if (pilihanPertama == tombol) {
+            tombol.alpha = 1f
+            pilihanPertama = null
             return
         }
 
@@ -234,6 +286,9 @@ class GameMenu : AppCompatActivity() {
         val kataKedua = tombol.text.toString()
 
         periksaJawaban(kataPertama, kataKedua, tombol)
+        lifecycleScope.launch {
+            delay(1200)
+        }
     }
 
     // Memeriksa pasangan kata
@@ -242,7 +297,7 @@ class GameMenu : AppCompatActivity() {
         kata2: String,
         button2: Button
     ) {
-
+        sedangCek = true
         // Urutan pilihan bebas: Indonesia dulu atau Inggris dulu
         val pasanganBenar = pasanganAktif.find {
             (it.indonesia == kata1 && it.inggris == kata2) ||
@@ -250,20 +305,27 @@ class GameMenu : AppCompatActivity() {
         }
 
         if (pasanganBenar != null) { // jika pasangan benar
+            binding.notifBenar.text = "Benar! skor bertambah 1"
+            binding.notifBenar.visibility = android.view.View.VISIBLE
+            binding.notifBenar.startAnimation(varnotifBenar)
 
             // Jawaban benar
             skor++
             updateSkor()
 
+            katasudahtertebak.add(pasanganBenar)
+
+            if (katasudahtertebak.size > 3) {
+                katasudahtertebak.removeAt(0)
+            }
             pasanganAktif.remove(pasanganBenar)
 
             // Mengisi ulang persediaan
             if (pasanganTersedia.isEmpty()) {
-
                 pasanganTersedia.addAll(
                     semuaPasangan.filter { kandidat ->
                         kandidat !in pasanganAktif &&
-                                kandidat != pasanganBenar
+                                kandidat !in katasudahtertebak
                     }.shuffled()
                 )
             }
@@ -276,24 +338,26 @@ class GameMenu : AppCompatActivity() {
                 )
             }
 
-            Toast.makeText(
-                this,
-                "Benar! +1",
-                Toast.LENGTH_SHORT
-            ).show()
-
             pilihanPertama?.alpha = 1f
             pilihanPertama?.backgroundTintList = getColorStateList(R.color.hijau_benar)
             button2.backgroundTintList = getColorStateList(R.color.hijau_benar)
             lifecycleScope.launch {
                 pilihanPertama = null
-                delay(1000)
+                delay(1200)
+                binding.notifBenar.visibility = android.view.View.INVISIBLE
                 tampilkanKata()
+                sedangCek = false
             }
 
         } else {
+            sedangCek = true
+
 
             // Jawaban salah
+            binding.notifBenar.text = "Salah! nyawa berkurang 1"
+            binding.notifBenar.visibility = android.view.View.VISIBLE
+            binding.notifBenar.startAnimation(varnotifBenar)
+
             nyawa--
             updateNyawa()
 
@@ -308,18 +372,16 @@ class GameMenu : AppCompatActivity() {
                 )
             }
 
-            Toast.makeText(
-                this,
-                "Salah! Nyawa berkurang",
-                Toast.LENGTH_SHORT
-            ).show()
+
             pilihanPertama?.alpha = 1f
             pilihanPertama?.backgroundTintList = getColorStateList(R.color.merah_salah)
             button2.backgroundTintList = getColorStateList(R.color.merah_salah)
             lifecycleScope.launch {
                 pilihanPertama = null
-                delay(2000)
+                delay(1200)
+                binding.notifBenar.visibility = android.view.View.INVISIBLE
                 tampilkanKata()
+                sedangCek = false
             }
 
             // Game Over

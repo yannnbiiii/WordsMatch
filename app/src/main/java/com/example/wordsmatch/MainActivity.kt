@@ -56,6 +56,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val daftarMode = listOf("EASY", "HARD", "BOTH")
+    private var indexMode = 0 // Default index 0 = EASY
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -75,8 +79,21 @@ class MainActivity : AppCompatActivity() {
         }
         binding.sapaUser.text = "Selamat bermain $namaUser !"
 
+        binding.next.setOnClickListener {
+            indexMode = (indexMode + 1) % daftarMode.size
+            updateTampilanMode()
+        }
+
+        binding.preveus.setOnClickListener {
+            indexMode = if (indexMode - 1 < 0) daftarMode.size - 1 else indexMode - 1
+            updateTampilanMode()
+        }
+
         binding.buttonStart.setOnClickListener {
-            startActivity(Intent(this, GameMenu::class.java))
+            val modeDipilih = daftarMode[indexMode]
+            val intent = Intent(this, GameMenu::class.java)
+            intent.putExtra("MODE", modeDipilih)
+            startActivity(intent)
         }
 
         binding.buttonLeaderboard.setOnClickListener {
@@ -97,9 +114,32 @@ class MainActivity : AppCompatActivity() {
         tampilkanBestScore()
     }
 
+    private fun updateTampilanMode() {
+        binding.btnModeTeks.text = daftarMode[indexMode]
+    }
+
     private fun tampilkanBestScore() {
         val rekor = getSharedPreferences("wordsmatch", MODE_PRIVATE).getInt("rekor", 0)
         binding.tvBestScore.text = "Best score: $rekor"
+    }
+    private fun tampilkanDialogPilihMode() {
+        val opsiMode = arrayOf("Easy (Mudah)", "Hard (Sulit)", "Campuran")
+
+        AlertDialog.Builder(this)
+            .setTitle("Pilih Mode Permainan")
+            .setItems(opsiMode) { _, which ->
+                val modeDipilih = when (which) {
+                    0 -> "EASY"
+                    1 -> "HARD"
+                    else -> "CAMPURAN"
+                }
+
+                // Pindah ke GameMenu sambil membawa data mode
+                val intent = Intent(this, GameMenu::class.java)
+                intent.putExtra("MODE", modeDipilih)
+                startActivity(intent)
+            }
+            .show()
     }
 
     // Kalau sudah login, ikon kontak menampilkan info akun + tombol logout

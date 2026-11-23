@@ -18,7 +18,7 @@
             android:layout_width="270dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="125dp"
             android:layout_marginBottom="0dp"
             android:fontFamily="@font/american_captain"
             android:text="@string/app_name"
@@ -34,14 +34,6 @@
 
             />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        >
-
         <TextView
             android:id="@+id/tvBestScore"
             android:layout_width="308dp"
@@ -51,7 +43,85 @@
             android:fontFamily="@font/american_captain"
             android:text="Best score: 0"
             android:textAlignment="center"
+            android:layout_marginBottom="12dp"
             android:textSize="40dp" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+
+            <Button
+                android:id="@+id/preveus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:text="&lt;"
+                android:textSize="30sp"
+                android:textColor="@color/main_color"
+                android:fontFamily="@font/american_captain"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arca_majora_3_bold"
+                    android:text="TINGKAT KESULITAN"
+                    android:textSize="8sp"
+                    android:layout_gravity="center"
+
+                    />
+
+                <Button
+                    android:id="@+id/btnModeTeks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:insetTop="-8dp"
+                    android:insetBottom="0dp"
+                    android:minHeight="0dp"
+                    android:backgroundTint="@color/white"
+                    android:text="EASY"
+                    android:textColor="@color/main_color"
+                    android:fontFamily="@font/american_captain"
+                    android:layout_gravity="center"
+                    android:textSize="29sp"
+
+                    />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:text="&gt;"
+                android:textSize="30sp"
+                android:textColor="@color/main_color"
+                android:fontFamily="@font/american_captain"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/buttonStart"
@@ -60,18 +130,23 @@
             android:layout_gravity="center"
             android:backgroundTint="#4A4A4A"
             android:text="Mulai"
+            android:layout_marginTop="14dp"
             android:fontFamily="@font/american_captain"
             android:textSize="25dp"
             app:cornerRadius="5dp"
 
+
             />
 
+
+
     </LinearLayout>
+    <!-- 215dp-->
     <LinearLayout
         android:layout_width="215dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:orientation="horizontal"
         android:weightSum="10">
 
@@ -91,7 +166,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:backgroundTint="#4A4A4A"
             app:cornerRadius="5dp"
             app:icon="@drawable/ic_kontak"
